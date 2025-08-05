@@ -1,0 +1,901 @@
+@font-face {
+    font-family: 'Sofast';
+    src: url('../font/Sofast.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Sofast', sans-serif;
+}
+
+body {
+    background: #753B9D;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px 20px 60px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.logo img {
+    width: 250px;
+    height: auto;
+}
+
+/* Estilo da barra superior */
+.top-bar-logo {
+    background-color: white;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    
+    .fonte-menor{
+        position: fixed;
+        right: 40px;
+        top: 86px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .fonte-maior{
+        position: fixed;
+        right: 16px;
+        top: 86px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+    }
+}
+
+.top-bar-logo .logo {
+    color: #333;
+    padding: 16px;
+    text-align: center;
+    width: 150px;
+    height: auto;
+    margin: auto;
+}
+
+.top-bar {
+    display: flex;
+    margin-top: 70px;
+
+
+    h1 {
+        font-size: 20px;
+        text-align: center;
+        color: white;
+    }
+
+    .back-btn {
+        position: fixed;
+        left: 16px;
+        top: 86px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+    }
+}
+
+h2 {
+    text-align: center;
+    font-size: 26px;
+    color: #222;
+    margin-bottom: 24px;
+}
+
+/* Menu inferior fixo */
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.bottom-menu a {
+    text-decoration: none;
+    color: #753B9D;
+    font-size: 14px;
+    text-align: center;
+    width: 25%;
+}
+
+.bottom-menu a.ativo {
+    background: white; /* leve contraste */;
+    border-radius: 50% 50% 0 0; /* arredondamento superior */
+    margin-top: -30px;
+    padding-top: 15px;
+}
+
+/*LOGIN*/
+#login {
+
+    .login-container {
+        background-color: #ffffff;
+        width: 100%;
+        max-width: 400px;
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        font-size: 15px;
+        transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+        border-color: #111;
+        outline: none;
+    }
+
+    .btn-login {
+        width: 100%;
+        padding: 14px;
+        background-color: #753B9D;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-login:hover {
+        background-color: #333;
+    }
+
+    .bottom-link {
+        margin-top: 18px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .bottom-link a {
+        color: #753B9D;
+        ;
+        text-decoration: none;
+    }
+
+    .bottom-link a:hover {
+        text-decoration: underline;
+    }
+}
+
+
+/*MENU*/
+#menu {
+
+    /* Estilo da barra superior */
+    .top-bar {
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        z-index: 100;
+    }
+
+    .top-bar .logo {
+        color: #333;
+        padding: 16px;
+        text-align: center;
+        width: 150px;
+        height: auto;
+        margin: auto;
+    }
+
+    /* Conteúdo principal */
+    .home-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    .welcome {
+        font-size: 23px;
+        color: white;
+        margin-bottom: 20px;
+        text-align: center;
+
+        span {
+            font-size: 15px;
+        }
+    }
+
+    .section-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        text-decoration: underline 3px #333;
+        text-align: center;
+        margin: 20px 0 10px;
+    }
+
+    /* Links em formato de cartão */
+    .card-link {
+        display: block;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 16px;
+        margin-bottom: 12px;
+        text-decoration: none;
+        color: #333;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-link:hover {
+        background-color: #f3ecfa;
+    }
+
+    .card-link span {
+        font-size: 18px;
+    }
+
+
+
+}
+
+/*CURSOS*/
+#curso {
+
+    .courses-container {
+        padding: 20px 0;
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .course-card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 10px;
+        margin-bottom: 16px;
+        display: flex;
+        gap: 16px;
+        text-decoration: none;
+        color: #333;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        max-width: 380px;
+    }
+
+    .course-card:hover {
+        background-color: #f3ecfa;
+    }
+
+    .course-card img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    .course-info{
+        width: 100%;
+    }
+
+    .course-info h2 {
+        font-size: 14px;
+        color: #753B9D;
+        margin-bottom: 6px;
+    }
+    .course-info h3 {
+        font-size: 12px;
+        color: #753B9D;
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .course-info p {
+        font-size: 12px;
+        color: #555;
+        margin: 0;
+    }
+
+
+}
+
+/*PERFIL*/
+#perfil {
+
+    .profile-container {
+        padding: 20px;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .profile-pic {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-pic img {
+        width: 120px;
+        height: 120px;
+        border-radius: 100%;
+        object-fit: cover;
+        border: 4px solid #753B9D;
+    }
+
+    .info-group {
+        margin-bottom: 16px;
+    }
+
+    .info-group label {
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .info-group span {
+        display: block;
+        font-size: 14px;
+        color: white;
+    }
+
+    .btn-atualizar {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .btn-update {
+        display: inline-block;
+        color: #753B9D;
+        background-color: white;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-update:hover {
+        background-color: #5b2d7d;
+        color: white;
+    }
+
+}
+
+/*ATUALIZAR PERFIL*/
+#atualizarPerfil {
+
+    .form-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 15px;
+        font-family: 'Sofast', sans-serif;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #753B9D;
+        outline: none;
+    }
+
+    .btn-salvar {
+        width: 100%;
+        padding: 14px;
+        background-color: white;
+        color: #753B9D;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-salvar:hover {
+        background-color: #333;
+    }
+
+
+
+}
+
+/*CADASTRAR ALUNO*/
+#cadastrar {
+    .top-bar{
+        position: fixed;
+        width: 100%;
+        height: 70px;
+        justify-content: center;
+        align-items: center;
+        top: 0px;
+        background: #753B9D;
+    }
+    .form-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+        margin-top: 120px;
+    }
+    .form-group-flex{
+        display: flex;
+        justify-content: space-between;
+
+        .form-group{
+            width: 45%;
+        }
+    }
+    .form-group {
+        margin-bottom: 18px;
+    }    
+
+    label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 15px;
+        font-family: 'Sofast', sans-serif;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #753B9D;
+        outline: none;
+    }
+
+    .btn-salvar {
+        width: 100%;
+        padding: 14px;
+        background-color: white;
+        color: #753B9D;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-salvar:hover {
+        background-color: #333;
+    }
+
+
+
+}
+
+/*CONFIGURAÇÃO*/
+#configuracao {
+
+    .settings-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .settings-list a {
+        display: block;
+        background-color: white;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 14px;
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+    }
+
+    .settings-list a:hover {
+        background-color: #f3f3f3;
+    }
+
+
+}
+
+/*NOTAS*/
+#notas {
+
+    .notes-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .note-card-link {
+        text-decoration: none;
+    }
+
+    .note-card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 16px;
+        margin-bottom: 16px;
+        transition: background-color 0.2s ease;
+    }
+
+    .note-card:hover {
+        background-color: #f3f3f3;
+        cursor: pointer;
+    }
+
+    .note-card h2 {
+        font-size: 16px;
+        color: #753B9D;
+        margin-bottom: 6px;
+    }
+
+    .note-card p {
+        font-size: 14px;
+        color: #555;
+        margin: 4px 0;
+    }
+
+}
+
+/*NOTA CURSO*/
+#nota_curso {
+
+    .course-header {
+        top: 130px;
+        position: fixed;
+        text-align: center;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        margin-bottom: 16px;
+    }
+
+    .course-header h2 {
+        font-size: 15px;
+        color: #333;
+        margin-bottom: 4px;
+    }
+
+    .course-header p {
+        font-size: 12px;
+        color: #666;
+    }
+
+    .notes-container {
+        padding: 0 20px;
+        width: 90%;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .note-card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 16px;
+        margin-bottom: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .note-extra {
+        display: none;
+        margin-top: 10px;
+    }
+
+    .note-card.open .note-extra {
+        display: block;
+    }
+
+    .note-card h3,
+    .note-card .nota-resumo {
+        font-size: 16px;
+        color: #753B9D;
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .note-card .nota-resumo {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .note-card p {
+        font-size: 14px;
+        color: #555;
+        margin: 4px 0;
+    }
+
+}
+
+/*PROJETOS*/
+#projetos {
+
+    .projects-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .project-card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+
+    .project-card h2 {
+        font-size: 16px;
+        color: #753B9D;
+        margin-bottom: 6px;
+    }
+
+    .project-card p {
+        font-size: 14px;
+        color: #555;
+        margin: 4px 0;
+    }
+
+    .project-card a {
+        font-size: 14px;
+        color: #753B9D;
+        text-decoration: none;
+    }
+
+}
+
+/*NOTIFICAÇÃO*/
+#notificacao {
+    .top-bar {
+        h1 {
+            width: min-content;
+        }
+    }
+
+    .notifications-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .notification {
+        background-color: white;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .notification h3 {
+        font-size: 16px;
+        color: #753B9D;
+        margin-bottom: 4px;
+    }
+
+    .notification p {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 4px;
+    }
+
+    .notification small {
+        display: block;
+        font-size: 12px;
+        color: #999;
+        margin-top: 6px;
+    }
+}
+
+/*MENSAGEM*/
+#mensagem {
+
+    .contact-container {
+        padding: 10px;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .contact-info {
+        background-color: white;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .contact-info h2 {
+        font-size: 16px;
+        margin-bottom: 8px;
+        color: #753B9D;
+    }
+
+    .contact-info p {
+        font-size: 12px;
+        color: #555;
+        margin: 4px 0;
+    }
+
+    form {
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: white;
+            color: #753B9D;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: white;
+            color: #333333;
+        }
+    }
+}
+
+/*ESQUECI SENHA*/
+#esqueci_senha {
+    .container {
+        background-color: #ffffff;
+        width: 100%;
+        max-width: 400px;
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+    h2{
+        color: #753B9D;
+    }
+
+    p {
+        font-size: 14px;
+        color: #333333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    input[type="email"] {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-bottom: 16px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #753B9D;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .mensagem-sucesso {
+        margin-top: 12px;
+        color: green;
+        font-size: 14px;
+    }
+
+    .voltar {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .voltar a {
+        color: #753B9D;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .voltar a:hover {
+        color: #333333;
+        text-decoration: none;
+        font-size: 14px;
+    }
+}
