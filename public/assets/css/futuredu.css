@@ -1,0 +1,116 @@
+@import url("https://use.typekit.net/rst6rbh.css");
+
+@font-face {
+    font-family: 'Sofast';
+    src: url('../fonts/Sofast.otf') format('opentype'),
+         url('../fonts/Sofast.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body,
+a,
+.banner-section .section-wrapper .banner-content .subtitle {
+  color: var(--text-light);
+}
+
+.menu > ul > li > a{
+  color: var(--text-light);
+}
+
+.menu-item-has-children > a::after,
+.menu-item-has-children > a::before {
+  color: var(--background-light) !important;
+  background-color: var(--background-light) !important;
+}
+
+/* Aplicando a fonte Lightcase para títulos */
+h1, h2, h3 {
+    font-family: 'Lightcase', sans-serif;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Aplicando a fonte Sofast para botões */
+button, .btn, a, li {
+    font-family: 'Sofast', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.header-top-area .social-icons li a {
+  color: var(--text-light);
+}
+
+
+p {
+  font-family: "effra", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--text-light);
+}
+
+/* Definição das cores padrão */
+:root {
+  --primary-color: #1d3b8b; /* Azul escuro */
+  --secondary-color: #753b9d; /* Roxo */
+  --accent-color: #2e90d1; /* Azul vibrante */
+  --light-gray: #bfc6c9;
+  --dark-gray: #2f2f2f;
+  --text-dark: #222;
+  --text-light: #bfc6c9;
+  --background-light: #ffffff;
+  --background-dark: #121212;
+}
+
+/* Estilo para o tema claro */
+.light-theme {
+  background-color: var(--background-light);
+  color: var(--text-dark);
+}
+
+.light-theme a {
+  color: var(--primary-color);
+}
+
+.light-theme .button {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border: 2px solid var(--secondary-color);
+}
+
+/* Estilo para o tema escuro */
+.dark-theme {
+  background-color: var(--background-dark);
+  color: var(--text-light);
+}
+
+.dark-theme a {
+  color: var(--accent-color);
+}
+
+.dark-theme .button {
+  background-color: var(--accent-color);
+  color: var(--text-light);
+  border: 2px solid var(--primary-color);
+}
+
+
+.header-wrapper .logo a img {
+  width: 20vw; /* 10% da largura da tela */
+  max-width: 250px; 
+  height: auto;
+}
+
+.header-section.header-fixed .header-bottom {
+  background: #3498DB;
+}
+
+
+.course-review{
+  color: var(--secondary-color);
+}
+
+.course-item .course-inner .course-content .course-details {
+  color: var(--secondary-color);
+}

@@ -1,0 +1,47 @@
+
+
+/* LOGO INICIO */
+.sidebar-brand {
+    height: 7.5rem;
+}
+
+.sidebar-brand .brand-link .brand-image {
+    width: 100%;
+    max-height: 80px;
+
+}
+
+.opacity-75 {
+    opacity: 1 !important;
+}
+
+.shadow {
+    box-shadow: none !important;
+}
+
+/* LOGO FIM */
+
+
+.active{
+
+    background: #fff;
+
+}
+
+.card-title {
+    float: left;
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin-top: 10px;
+}
+
+.btn-novo{
+    float: right;
+    margin-right: 50px;
+}
+
+
+.cardProf{
+    display: flex;
+    justify-content: space-around;
+}
