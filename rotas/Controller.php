@@ -1,10 +1,14 @@
 <?php
-    class Controller{
 
-        //Função para carregar as views
-        public function carregarViews($view, $dados = array()){
-            extract($dados);
-            require_once '../app/views/'.$view.'.php';            
-        }
+class Controller{
+
+    public function carregarViews($views, $dados = array()){
+
+        extract($dados);
+
+        require_once '../app/views/'.$views.'.php';
+             //'../app/views/home.php
+
     }
-?>
+
+}

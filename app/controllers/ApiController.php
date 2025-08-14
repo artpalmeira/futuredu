@@ -23,42 +23,143 @@ class ApiController extends Controller
         $dados = array();
         $dados['titulo'] = 'Área de Atuação - Ki Oficina';
 
-        //var_dump("Teste");
         $this->carregarViews('api', $dados);
-
-       
     }
+
 
     //************LOGIN**************** */
     public function LoginAluno()
     {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email_aluno'] ?? null;
             $senha = $_POST['senha_aluno'] ?? null;
 
             if (!$email || !$senha) {
                 http_response_code(400);
-                echo json_encode(["erro" => "Email e senha são obrigatórios!"]);
+                echo json_encode(['erro' => 'E-mail ou senha são obrigatórios'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
                 return;
             }
 
             $aluno = $this->alunoModel->postLoginAluno($email, $senha);
 
             if ($aluno) {
-                http_response_code(200);
+
+                //Gerar um token
+                $dadosToken = [
+                    'id'    => $aluno['id_aluno'],
+                    'email' => $aluno['email_aluno'],
+                    'exp'   => time() + 3600 // 1 hora de validade
+                ];
+                $token = AuxiliarToken::gerar($dadosToken);
+
+                if (!class_exists('AuxiliarToken')) {
+                    die('AuxiliarToken não foi carregado!');
+                }
+
                 echo json_encode([
-                    "mensagem" => "Login realizado com sucesso!",               
-                    "Aluno" => $aluno
+                    "mensagem"  => "Login realizado com sucesso!",
+                    'token'     => $token,
+                    //"Aluno"     => $aluno
+
                 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
             } else {
                 http_response_code(401);
-                echo json_encode(["erro" => "Email ou senha invalidos ou aluno inativo"]);
+                echo json_encode(['erro' => 'E-mail ou senha inválidos'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
             }
         } else {
             http_response_code(405);
             echo json_encode(["erro" => "Método não permitido"]);
         }
     }
+
+
+
+    //************ALUNOS**************** */  
+
+  
+    public function ListarAlunoId($id)
+    {
+
+        // 1. Validação do parâmetro $id
+        if (!ctype_digit($id) || (int)$id <= 0) {
+            http_response_code(400);
+            echo json_encode(["erro" => "ID inválido"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+        $id = (int)$id;
+
+        // 2. Validação do token JWT no header Authorization
+        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+        if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            http_response_code(401);
+            echo json_encode(["erro" => "Token não fornecido ou malformado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $payload = AuxiliarToken::validar($matches[1]);
+        if (!$payload) {
+            http_response_code(401);
+            echo json_encode(["erro" => "Token inválido ou expirado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+        // Ex: $payload['id']
+
+        // 3. Autorização: só permitir acesso ao próprio aluno
+        if ($payload['id'] !== $id) {
+            http_response_code(403);
+            echo json_encode(["erro" => "Acesso negado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // 4. Busca do aluno no banco
+        $aluno = $this->alunoModel->getAlunoId($id);
+        if (empty($aluno)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum aluno encontrado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+
+        // 5. Resposta com dados do aluno
+        http_response_code(200);
+        echo json_encode($aluno, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+    }
+
+
+    public function AtualizarAluno($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
+            parse_str(file_get_contents("php://input"), $dados);
+
+            if (empty($dados)) {
+                http_response_code(400);
+                echo json_encode(["erro" => "Nenhum dado enviado para atualizar"]);
+                return;
+            }
+
+            $resultado = $this->alunoModel->patchAtualizarAluno($dados, $id);
+
+            if ($resultado) {
+                http_response_code(200);
+                echo json_encode(["mensagem" => "Aluno atualizado com sucesso!"]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["erro" => "Erro ao atualizar o aluno. Erro de servidor."]);
+            }
+        } else {
+            http_response_code(405);
+            echo json_encode(["erro" => "Método não permitido."]);
+        }
+    }
+
+    //************ FIM ALUNOS**************** */
+
+
+
+
+
 
     // ************CURSOS*****************
     // Listar todos os cursos em ordem alfabética
@@ -89,7 +190,7 @@ class ApiController extends Controller
         echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-    // Listar todos os funcionarios de acordo o cargo em ordem alfabética
+    // Buscar Curso  - REVER
     public function ListarCursoBusca($curso)
     {
         //echo 'ListarCursoBusca';
@@ -102,6 +203,9 @@ class ApiController extends Controller
         }
         echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
+
+
+    // ************ FIM CURSOS**************
 
 
     // ************EMPRESAS*****************
@@ -120,7 +224,9 @@ class ApiController extends Controller
     }
 
 
-    
+    // ************ FIM EMPRESAS****************
+
+
     // ************FUNCIONARIOS*****************
     // Listar todos os funcionarios pelo cargo em ordem alfabética
     public function ListarFuncionariosDados()
@@ -136,7 +242,7 @@ class ApiController extends Controller
         echo json_encode($funcionarios, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-    // Listar todos os funcionarios de acordo o cargo em ordem alfabética
+    // Buscar FUNC por Cargo - Rever
     public function ListarFuncionariosCargo($cargo)
     {
         //echo 'ListarFuncionariosCargo';
@@ -150,7 +256,11 @@ class ApiController extends Controller
         echo json_encode($funcionarios, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-    // ************PROJETOS*****************
+
+    // ************ FIM FUNCIONARIOS********
+
+
+    // ************PROJETOS***************** - REVER
     public function NovoProjeto()
     {
         $titulo = $_POST['titulo_projeto'] ?? null;
@@ -169,6 +279,7 @@ class ApiController extends Controller
         exit;
     }
 
+    // REVER
     public function ParticiparProjeto()
     {
 
@@ -184,33 +295,9 @@ class ApiController extends Controller
         exit;
     }
 
-    //************ALUNOS**************** */
 
-    public function AtualizarAluno($id)
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
-            parse_str(file_get_contents("php://input"), $dados);
+    // ************ FIM PROJETOS*****************
 
-            if (empty($dados)) {
-                http_response_code(400);
-                echo json_encode(["erro" => "Nenhum dado enviado para atualizar"]);
-                return;
-            }
-
-            $resultado = $this->alunoModel->patchAtualizarAluno($dados, $id);
-
-            if ($resultado) {
-                http_response_code(200);
-                echo json_encode(["mensagem" => "Aluno atualizado com sucesso!"]);
-            } else {
-                http_response_code(500);
-                echo json_encode(["erro" => "Erro ao atualizar o aluno. Erro de servidor."]);
-            }
-        } else {
-            http_response_code(405);
-            echo json_encode(["erro" => "Método não permitido."]);
-        }
-    }
 
 
 }

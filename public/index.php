@@ -1,6 +1,10 @@
 <?php
 
-    require_once('../config/config.php');
+session_start();
 
-    $caminho = new Rotas();
-    $caminho->executar();
+// Carregando das configurações iniciais
+require_once('../config/config.php');
+
+
+$caminho = new Rotas();
+$caminho->executar();

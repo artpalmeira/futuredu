@@ -1,0 +1,104 @@
+@import url("https://use.typekit.net/rst6rbh.css");
+
+@font-face {
+  font-family: 'Sofast';
+  src: url('../fonts/Sofast.otf') format('opentype'),
+       url('../fonts/Sofast.ttf') format('truetype');
+}
+
+body, a, p {
+  color: var(--text-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin:0; padding:0;
+}
+
+h1, h2, h3 {
+  font-family: 'Lightcase', sans-serif;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+button, .btn, a {
+  font-family: 'Sofast', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.method {
+  display: inline-block;
+  padding:2px 8px;
+  margin-right:8px;
+  background: var(--accent-color);
+  color: white;
+  border-radius:4px;
+  font-size:0.9em;
+  font-family: 'Sofast', sans-serif;
+}
+
+.code, code {
+  background: var(--light-gray);
+  padding:2px 4px;
+  border-radius:4px;
+  font-family: monospace;
+}
+
+.endpoint {
+  background: var(--background-light);
+  border: 1px solid var(--light-gray);
+  padding:1rem;
+  margin-bottom:1rem;
+  border-radius:6px;
+}
+
+:root {
+  --primary-color: #1d3b8b;
+  --secondary-color: #753b9d;
+  --accent-color: #2e90d1;
+  --light-gray: #bfc6c9;
+  --dark-gray: #2f2f2f;
+  --text-dark: #222;
+  --text-light: #bfc6c9;
+  --background-light: #ffffff;
+  --background-dark: #121212;
+}
+
+.light-theme {
+  background: var(--background-light);
+  color: var(--text-dark);
+}
+
+.light-theme .endpoint {
+  background: var(--background-light);
+  border-color: var(--light-gray);
+}
+
+.dark-theme {
+  background: var(--background-dark);
+  color: var(--text-light);
+}
+
+.dark-theme .endpoint {
+  background: #1e1e1e;
+  border-color: var(--dark-gray);
+}
+
+.toggle-theme {
+  cursor: pointer;
+  padding:0.5rem 1rem;
+  background: var(--secondary-color);
+  border:none;
+  color:white;
+  border-radius:4px;
+}
+
+.header-section {
+  background: var(--background-light);
+}
+
+.light-theme .header-section {
+  background: var(--background-light);
+}
+
+.dark-theme .header-section {
+  background: var(--dark-gray);
+}

@@ -31,6 +31,10 @@
         <p>Retorna dados do aluno autenticado (Bearer Token no header)</p>
       </div>
       <div class="endpoint">
+        <span class="method">GET</span> <code>/api/ListarAluno/{id}</code>
+        <p>Retorna dados do aluno autenticado (Bearer Token no header)</p>
+      </div>
+      <div class="endpoint">
         <span class="method">PATCH</span> <code>/api/aluno/{id}</code>
         <p>Atualiza dados do aluno (form-urlencoded ou JSON no corpo)</p>
       </div>

@@ -3,62 +3,57 @@
 class LoginController extends Controller
 {
 
-    public function index()
-    {
-        $dados = array();
-        $dados['titulo'] = "Login";
 
-        $this->carregarViews('login', $dados);
-    }
-
-    public function logar()
+    public function entrar()
     {
+
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email_aluno'] ?? '';
-            $senha = $_POST['senha_aluno'] ?? '';
 
-            // Requisição para a API no servidor do DASHBOARD
-            $url = URL_API . "LoginAluno";
+            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+            $senha = filter_input(INPUT_POST, 'senha');
 
-            $postData = http_build_query([
-                "email_aluno" => $email,
-                "senha_aluno" => $senha
-            ]);
+            $funcModel = new Funcionario();
+            $usuario = $funcModel->buscarFunc($email, $senha);
 
-            $ch = curl_init($url);
 
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);            
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            if ($response === false) {
-                $_SESSION['erro_login'] = "Erro ao conectar com o servidor.";
-                header("Location: " . URL_BASE . "index.php?url=login");
-                exit;
-            }
-
-            curl_close($ch);
-            $result = json_decode($response, true);
-
-            // echo "<pre>";
-            // print_r($result);
-            // echo "</pre>";
-            // exit;
-            
-            if ($httpCode === 200) {
-                // Login OK: salvar na sessão
-                $_SESSION['aluno'] = $result['Aluno'];
-
-                header("Location: " . URL_BASE . "index.php?url=menu");
-                exit;
+            if ($usuario) {
+                $tipo       = 'funcionario';
+                $tipo_id    = $usuario['id_funcionario'];
+                $tipo_nome  = $usuario['nome_funcionario'];
+                $tipo_email = $usuario['email_funcionario'];
+                $tipo_cargo = $usuario['cargo_funcionario'];
             } else {
-                $_SESSION['erro_login'] = $result['mensagem'] ?? "Credenciais inválidas.";
-                header("Location: " . URL_BASE . "index.php?url=login");
+
+                $alunoModel = new Aluno();
+                $usuario = $alunoModel->postLoginAluno($email, $senha);
+
+                if ($usuario) {
+                    $tipo       = 'aluno';
+                    $tipo_id    = $usuario['id_aluno'];
+                    $tipo_nome  = $usuario['nome_aluno'];
+                    $tipo_email = $usuario['email_aluno'];
+
+                } else {
+                    $usuario = null;
+                }
+            } // FIM DO IF DE VERIFICAÇÃO DO TIPO
+
+            if($usuario){
+
+                $_SESSION['tipo']           = $tipo;
+                $_SESSION['tipo_id']        = $tipo_id;
+                $_SESSION['tipo_nome']      = $tipo_nome;
+                $_SESSION['tipo_email']     = $tipo_email;
+
+                //Redirecionar para a página de Dash
+                header('Location:' . URL_BASE .'dash');
                 exit;
+            }else{
+                $_SESSION['erro-login'] = "E-mail ou Senha incorretos";
             }
         }
+
+        
     }
 }

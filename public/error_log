@@ -1,0 +1,228 @@
+[12-Aug-2025 15:31:56 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/alve6465/smpsistema/tipi03/futuredu/app/models/Curso.php:12
+Stack trace:
+#0 /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/HomeController.php(17): Curso->getCursoRand(4)
+#1 /home/alve6465/smpsistema/tipi03/futuredu/rotas/Rotas.php(71): HomeController->index()
+#2 /home/alve6465/smpsistema/tipi03/futuredu/public/index.php(10): Rotas->executar()
+#3 {main}
+  thrown in /home/alve6465/smpsistema/tipi03/futuredu/app/models/Curso.php on line 12
+[12-Aug-2025 15:34:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:34:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:34:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:34:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:50 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:50 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:50 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:50 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:50 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:50 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:50 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:50 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:51 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:52 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:52 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:52 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:35:52 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:36:28 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:36:28 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:36:28 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:36:28 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:26 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:27 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:27 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:27 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:27 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:29 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:37:36 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:38:15 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:30 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:38:47 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:39:54 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:39:56 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:40:26 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:40:52 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:42:03 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:42:48 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:42:50 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:43:06 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:43:09 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:44:11 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:14 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:45:32 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:46:03 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 124
+[12-Aug-2025 15:47:15 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 126
+[12-Aug-2025 15:47:16 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 126
+[12-Aug-2025 15:47:18 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 126
+[12-Aug-2025 15:47:21 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 126
+[12-Aug-2025 15:47:33 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:47:33 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:47:33 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:47:33 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[12-Aug-2025 15:47:57 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 126
+[12-Aug-2025 15:48:44 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 126
+[12-Aug-2025 15:50:08 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 126
+[12-Aug-2025 15:51:24 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 131
+[12-Aug-2025 15:51:47 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 131
+[12-Aug-2025 15:51:54 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:51:54 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:51:54 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:51:54 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:52:10 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 131
+[12-Aug-2025 15:52:15 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:52:15 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:52:15 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:52:15 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:52:59 America/Sao_Paulo] PHP Warning:  Undefined variable $todosOsCurso in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 32
+[12-Aug-2025 15:52:59 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, null given in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 68
+[12-Aug-2025 15:53:59 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected token "..." in /home/alve6465/smpsistema/tipi03/futuredu/app/controllers/ApiController.php on line 126
+[12-Aug-2025 15:58:02 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:58:02 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:58:02 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 15:58:02 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 16:27:56 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 16:27:56 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 16:27:56 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 16:27:56 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:15:23 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:15:23 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:15:23 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:15:23 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:38:18 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:38:18 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:38:18 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:38:18 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:56:53 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:56:53 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:56:53 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:56:53 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:58:11 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:58:11 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:58:11 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 18:58:11 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:01 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:01 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:01 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:01 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:01 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:01 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:01 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:01 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:12 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:12 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:12 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:12 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:35 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:40 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:40 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:40 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 20:48:40 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 22:00:18 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 22:00:18 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 22:00:18 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 22:00:18 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 22:17:21 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 22:17:21 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 22:17:21 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[12-Aug-2025 22:17:21 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[13-Aug-2025 13:25:09 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[13-Aug-2025 13:25:09 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[13-Aug-2025 13:25:09 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[13-Aug-2025 13:25:09 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/home.php on line 92
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:19 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/cursos.php on line 72
+[13-Aug-2025 13:25:23 America/Sao_Paulo] PHP Warning:  Undefined array key "foto_curso" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/detalhe.php on line 72

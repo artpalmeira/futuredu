@@ -1,106 +1,78 @@
-const cepInput = document.getElementById('cep');
+(function ($) {
+    "use strict";
 
-if (cepInput) {
-    cepInput.addEventListener('blur', function () {
-        let cep = this.value.replace(/\D/g, '');
-
-        if (!/^\d{8}$/.test(cep)) {
-            return;
-        }
-
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao buscar CEP');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.erro) {
-                    alert('CEP não encontrado.');
-                    return;
-                }
-
-                let logradouro = data.logradouro;
-                let bairro = data.bairro;
-                let cidade = data.localidade;
-                let uf = data.uf;
-
-                //alert(logradouro);
-
-                document.getElementById('endereco').value = `${logradouro} - ${bairro}, ${cidade}/${uf}`;
-            })
-            .catch(error => {
-                alert('Erro ao buscar o endereço.');
-                console.error(error);
-            });
-    });
-}
-
-//Função para fazer o texto do data-tts ser falado
-function speak(text){
-    if ('speechSynthesis' in window){
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'pt-BR';
-        window.speechSynthesis.cancel();//parar a fala anterior
-        window.speechSynthesis.speak(utterance);
-    }
-}
-
-//Seleciona todos os elementos da tela para leitura
-document.querySelectorAll('[data-tts]').forEach(el => {
-    const texto = el.getAttribute('data-tts');
-
-    //Falar ao clicar
-    el.addEventListener('click', function(){
-        speak(texto);
+    $(window).on('load', function () {
+        $('.preloader').fadeOut(1000);
     });
 
-    //Falar ao focar
-    el.addEventListener('focus', function(){
-        speak(texto);
+    // lightcase 
+    $('a[data-rel^=lightcase]').lightcase();
+
+
+    // scroll up start here
+    $(function () {
+        $(window).on('scroll', function () {
+            if ($(this).scrollTop() > 300) {
+                $('.scrollToTop').css({
+                    'bottom': '10%',
+                    'opacity': '1',
+                    'transition': 'all .5s ease'
+                });
+            } else {
+                $('.scrollToTop').css({
+                    'bottom': '-30%',
+                    'opacity': '0',
+                    'transition': 'all .5s ease'
+                })
+            }
+        });
+
+        //Click event to scroll to top
+        $('a.scrollToTop').on('click', function () {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 500);
+            return false;
+        });
     });
-});
-
-//Link de redefinição de senha
-function enviarEmail(event){
-    event.preventDefault();
-    const msg = document.getElementById('mensagem');
-    msg.style.display = "block";
-
-    //Desativar o input e o button
-    document.getElementById('email').disabled = true;
-    event.target.querySelector("button").disabled = true;
-
-    //Após 5 segundos redirecionar para a index
-    setTimeout(() => {
-        window.location.href = "index.php";
-    },5000);
-}
 
 
-let pixel = 0.5; //medida em pixel que vai aumentar ou diminiur a fonte
-function aumentarFonte(){
-    const elementos = document.querySelectorAll('body, body *'); 
 
-    elementos.forEach(el => {
-        const estilo = window.getComputedStyle(el);
-        const tamanho = parseFloat(estilo.fontSize);
+    $('.slider-logos').slick({
+        infinite: false,
+        arrows:false,
+        speed: 300,
+        autoplay: true,
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      });
+     
 
-        if (!isNaN(tamanho)){
-            el.style.fontSize = (tamanho + pixel) + "px";
-        }
-    });
-}
-function diminuirFonte(){
-    const elementos = document.querySelectorAll('body, body *'); 
 
-    elementos.forEach(el => {
-        const estilo = window.getComputedStyle(el);
-        const tamanho = parseFloat(estilo.fontSize);
+}(jQuery));
 
-        if (!isNaN(tamanho)){
-            el.style.fontSize = (tamanho - pixel) + "px";
-        }
-    });
-}
+
