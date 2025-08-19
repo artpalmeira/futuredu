@@ -1,0 +1,4 @@
+[17-Aug-2025 07:28:09 America/Sao_Paulo] PHP Warning:  Undefined variable $professor in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/funcionario/professor.php on line 5
+[17-Aug-2025 07:28:09 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, null given in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/funcionario/professor.php on line 5
+[19-Aug-2025 13:51:24 America/Sao_Paulo] PHP Warning:  Undefined variable $professor in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/funcionario/professor.php on line 5
+[19-Aug-2025 13:51:24 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, null given in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/funcionario/professor.php on line 5

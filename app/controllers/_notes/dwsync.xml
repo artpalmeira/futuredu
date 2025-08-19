@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="ApiController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133996726392479173" remote="133996727400000000" Dst="0" />
+<file name="ApiController.php" server="br61-cp.valueserver.com.br/futuredu/" local="134001076324342149" remote="134001076800000000" Dst="0" />
+<file name="AlunoController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764229535627" remote="134000988600000000" Dst="0" />
+<file name="AtualizarPerfilController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061362958" remote="134001045000000000" Dst="0" />
+<file name="CadastrarAlunoController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061413847" remote="134001045000000000" Dst="0" />
+<file name="ConfiguracaoController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061463952" remote="134001045000000000" Dst="0" />
+<file name="ContatoController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764229191182" remote="134001045000000000" Dst="0" />
+<file name="CursoController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764229257139" remote="134001045000000000" Dst="0" />
+<file name="DashController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764228952117" remote="134001045000000000" Dst="0" />
+<file name="ErroController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764228700991" remote="134001045000000000" Dst="0" />
+<file name="EsqueciSenhaController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061543884" remote="134001045000000000" Dst="0" />
+<file name="FuncionarioController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764228700991" remote="134001045000000000" Dst="0" />
+<file name="HomeController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764228521873" remote="134001045000000000" Dst="0" />
+<file name="InstrutoresController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764228285937" remote="134001045000000000" Dst="0" />
+<file name="LoginController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764228055248" remote="134001045000000000" Dst="0" />
+<file name="MensagemController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061640023" remote="134001045000000000" Dst="0" />
+<file name="MenuController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061680017" remote="134001045000000000" Dst="0" />
+<file name="NotaCursoController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061720013" remote="134001045000000000" Dst="0" />
+<file name="NotasController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061770004" remote="134001045000000000" Dst="0" />
+<file name="NotificacaoController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061810880" remote="134001045000000000" Dst="0" />
+<file name="PerfilController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061880883" remote="134001045000000000" Dst="0" />
+<file name="ProjetosController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995016061930887" remote="134001045000000000" Dst="0" />
+<file name="SobreController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764228055248" remote="134001045000000000" Dst="0" />
+<file name="UnidadeController.php" server="br61-cp.valueserver.com.br/futuredu/" local="133995764227748454" remote="134001045000000000" Dst="0" />
 </dwsync>

@@ -1,5 +1,7 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 class ApiController extends Controller
 {
 
@@ -60,8 +62,6 @@ class ApiController extends Controller
                 echo json_encode([
                     "mensagem"  => "Login realizado com sucesso!",
                     'token'     => $token,
-                    //"Aluno"     => $aluno
-
                 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
             } else {
                 http_response_code(401);
@@ -77,59 +77,33 @@ class ApiController extends Controller
 
     //************ALUNOS**************** */  
 
-  
     public function ListarAlunoId($id)
     {
+        // Autenticação + Autorização
+        $this->verificar($id);
 
-        // 1. Validação do parâmetro $id
-        if (!ctype_digit($id) || (int)$id <= 0) {
-            http_response_code(400);
-            echo json_encode(["erro" => "ID inválido"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            return;
-        }
-        $id = (int)$id;
 
-        // 2. Validação do token JWT no header Authorization
-        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
-        if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-            http_response_code(401);
-            echo json_encode(["erro" => "Token não fornecido ou malformado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            return;
-        }
-
-        $payload = AuxiliarToken::validar($matches[1]);
-        if (!$payload) {
-            http_response_code(401);
-            echo json_encode(["erro" => "Token inválido ou expirado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            return;
-        }
-        // Ex: $payload['id']
-
-        // 3. Autorização: só permitir acesso ao próprio aluno
-        if ($payload['id'] !== $id) {
-            http_response_code(403);
-            echo json_encode(["erro" => "Acesso negado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            return;
-        }
-
-        // 4. Busca do aluno no banco
+        // 🔎 Buscar aluno no banco
         $aluno = $this->alunoModel->getAlunoId($id);
+
         if (empty($aluno)) {
             http_response_code(404);
             echo json_encode(["mensagem" => "Nenhum aluno encontrado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
             return;
         }
 
-
-        // 5. Resposta com dados do aluno
-        http_response_code(200);
+        // Resposta
         echo json_encode($aluno, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-
     }
 
 
     public function AtualizarAluno($id)
     {
+
+         // Autenticação + Autorização
+         $this->verificar($id);
+         
+
         if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
             parse_str(file_get_contents("php://input"), $dados);
 
@@ -155,10 +129,6 @@ class ApiController extends Controller
     }
 
     //************ FIM ALUNOS**************** */
-
-
-
-
 
 
     // ************CURSOS*****************
@@ -300,4 +270,183 @@ class ApiController extends Controller
 
 
 
+
+    public function verificar($id)
+    {
+        // 1. Pega o header Authorization
+        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+
+        // 2. Valida se veio no formato "Bearer <token>"
+        if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            http_response_code(401);
+            echo json_encode(["erro" => "Token não fornecido ou malformatado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        // 3. Valida o token recebido
+        $payload = AuxiliarToken::validar($matches[1]);
+        if (!$payload) {
+            http_response_code(401);
+            echo json_encode(["erro" => "Token inválido ou expirado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        // 4. Confere se o ID no token é o mesmo do recurso solicitado
+        if ($payload['id'] !== (int)$id) {
+            http_response_code(403);
+            echo json_encode(["erro" => "Acesso negado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        // 5. Retorna payload se passou em todas as verificações
+        return $payload;
+    }
+
+
+
+
+    public function recuperarSenhaAluno()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['erro' => 'Método não permitido'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $email = filter_input(INPUT_POST, 'email_aluno', FILTER_SANITIZE_EMAIL);
+        if (!$email) {
+            http_response_code(400);
+            echo json_encode(['erro' => 'E-mail é obrigatório'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $aluno = $this->alunoModel->buscarAlunoPorEmail($email);
+
+        // Resposta genérica
+        if (!$aluno) {
+            http_response_code(200);
+            echo json_encode(['mensagem' => 'Se o e-mail existir, enviaremos um link para redefinição'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // 1) Gera TOKEN específico para reset
+        $resetToken = AuxiliarToken::gerarReset((int)$aluno['id_aluno'], $aluno['email_aluno'], 3600); // 1h
+
+        // 2) Armazena somente o hash + expiração
+        $hash   = hash('sha256', $resetToken);
+        $expira = (new DateTime('+1 hour'))->format('Y-m-d H:i:s');
+
+        $this->alunoModel->salvarResetToken((int)$aluno['id_aluno'], $hash, $expira);
+
+        // 3) Monta link
+        $link = URL_BASE . "api/redefinirSenha?token={$resetToken}";
+
+        // 4) Envia e-mail
+        require 'vendors/email/Exception.php';
+        require 'vendors/email/PHPMailer.php';
+        require 'vendors/email/SMTP.php';
+
+        $mail = new PHPMailer();
+
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;
+            $mail->isSMTP();
+            $mail->Host       = EMAIL_HOST;
+            $mail->SMTPAuth   = true;
+            $mail->Username   = EMAIL_USER;
+            $mail->Password   = EMAIL_PASS;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = EMAIL_PORT;
+
+
+
+            $mail->setFrom(EMAIL_USER, 'Escola FuturEdu');
+            $mail->addAddress($aluno['email_aluno'], $aluno['nome_aluno'] ?? 'Aluno');
+            $mail->setLanguage('br');
+            $mail->CharSet  = 'UTF-8';
+            $mail->Encoding = 'base64';
+            $mail->isHTML(true);
+            $mail->Subject = 'Recuperação de Senha';
+            $mail->msgHTML("
+            Olá, {$aluno['nome_aluno']}!<br><br>
+            Recebemos uma solicitação para redefinir sua senha.<br>
+            Este link é válido por 1 hora e pode ser usado uma única vez:<br><br>
+            <a href='{$link}'>{$link}</a><br><br>
+            Se você não fez essa solicitação, ignore este e-mail.
+        ");
+            $mail->AltBody = "Para redefinir sua senha (válido por 1h), acesse: {$link}";
+
+            $mail->send();
+
+            http_response_code(200);
+            echo json_encode(['mensagem' => 'Se o e-mail existir, enviaremos um link para redefinição'], JSON_UNESCAPED_UNICODE);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['erro' => 'Erro ao enviar e-mail', 'detalhes' => $mail->ErrorInfo], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+
+    public function resetarSenhaAluno()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['erro' => 'Método não permitido'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $tokenClaro = $_POST['token'] ?? null;
+        $novaSenha  = $_POST['nova_senha'] ?? null;
+
+        if (!$tokenClaro || !$novaSenha) {
+            http_response_code(400);
+            echo json_encode(['erro' => 'Token e nova senha são obrigatórios'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        if (strlen($novaSenha) < 8) {
+            http_response_code(400);
+            echo json_encode(['erro' => 'A nova senha deve ter pelo menos 8 caracteres'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // 1) Valida JWT e escopo
+        $payload = AuxiliarToken::validarReset($tokenClaro);
+        if (!$payload) {
+            http_response_code(403);
+            echo json_encode(['erro' => 'Token inválido ou expirado'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $idAluno = (int)($payload['sub'] ?? 0);
+
+        // 2) Confere se o token enviado corresponde ao hash salvo e se não expirou
+        $hash = hash('sha256', $tokenClaro);
+        $alunoToken = $this->alunoModel->getAlunoPorResetHash($hash);
+
+        if (
+            !$alunoToken || $idAluno !== (int)$alunoToken['id_aluno'] ||
+            empty($alunoToken['reset_token_expires']) ||
+            strtotime($alunoToken['reset_token_expires']) < time()
+        ) {
+            http_response_code(403);
+            echo json_encode(['erro' => 'Token inválido ou expirado'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // 3) Atualiza senha com hash seguro
+        $senhaHash = password_hash($novaSenha, PASSWORD_DEFAULT);
+        $ok = $this->alunoModel->atualizarSenha($idAluno, $senhaHash);
+
+        if ($ok) {
+            // 4) Invalida token
+            $this->alunoModel->limparResetToken($idAluno);
+            http_response_code(200);
+            echo json_encode(['mensagem' => 'Senha redefinida com sucesso'], JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(500);
+            echo json_encode(['erro' => 'Erro ao atualizar a senha'], JSON_UNESCAPED_UNICODE);
+        }
+    }
 }

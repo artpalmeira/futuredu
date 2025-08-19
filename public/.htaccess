@@ -6,9 +6,9 @@ RewriteEngine On
 
 #Definir o caminho base da aplicação
 
-RewriteBase /sistema-escola/public/
+#RewriteBase /sistema-escola/public/
 
-#RewriteBase /
+RewriteBase /
 
 
 

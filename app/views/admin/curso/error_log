@@ -1,0 +1,12 @@
+[18-Aug-2025 19:51:10 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Undefined constant "URL_BASE" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/curso/listar.php:31
+Stack trace:
+#0 {main}
+  thrown in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/curso/listar.php on line 31
+[19-Aug-2025 01:44:13 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Undefined constant "URL_BASE" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/curso/adicionar.php:6
+Stack trace:
+#0 {main}
+  thrown in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/curso/adicionar.php on line 6
+[19-Aug-2025 01:49:15 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Undefined constant "URL_BASE" in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/curso/editar.php:6
+Stack trace:
+#0 {main}
+  thrown in /home/alve6465/smpsistema/tipi03/futuredu/app/views/admin/curso/editar.php on line 6

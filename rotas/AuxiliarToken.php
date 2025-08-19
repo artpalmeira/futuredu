@@ -80,6 +80,32 @@ class AuxiliarToken
         return $payload;
     }
 
+
+    /** Gera um JWT específico para recuperação de senha */
+    public static function gerarReset(int $id, string $email, int $ttlSegundos = 3600): string
+    {
+        $agora = time();
+        $dados = [
+            'sub'   => $id,            
+            'email' => $email,
+            'scope' => 'pwd_reset',    
+            'iat'   => $agora,         
+            'exp'   => $agora + $ttlSegundos
+        ];
+        return self::gerar($dados); 
+    }
+
+    /** Valida token de reset e confere o escopo */
+    public static function validarReset(string $token): ?array
+    {
+        $payload = self::validar($token);
+        if (!$payload || ($payload['scope'] ?? null) !== 'pwd_reset') {
+            return null;
+        }
+        return $payload;
+    }
+    
+
     private static function base64UrlEncode(string $data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');

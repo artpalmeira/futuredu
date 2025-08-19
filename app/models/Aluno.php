@@ -4,8 +4,9 @@
 class Aluno extends Model
 {
 
-     //Método para login do aluno
-     public function postLoginAluno($email, $senha){
+    //Método para login do aluno
+    public function postLoginAluno($email, $senha)
+    {
 
         $sql = "SELECT * FROM tbl_aluno WHERE email_aluno = :email_aluno
         AND senha_aluno = :senha_aluno AND status_aluno = 'Ativo' 
@@ -18,7 +19,7 @@ class Aluno extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
         // /Teste
     }
-    
+
     // Método para listar todos os Aluno
     public function getTodosAlunos()
     {
@@ -57,6 +58,67 @@ class Aluno extends Model
         }
         $stmt->bindParam(":id_aluno", $id);
         return $stmt->execute();
-    }   
+    }
 
+    //Método buscar aluno por e-mail
+    public function buscarAlunoPorEmail($email)
+    {
+        $sql = "SELECT id_aluno, nome_aluno, email_aluno
+                  FROM tbl_aluno
+                 WHERE email_aluno = :email
+                 LIMIT 1";
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':email', $email, PDO::PARAM_STR);
+        $st->execute();
+        return $st->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+
+    public function salvarResetToken(int $id, string $tokenHash, string $expira): bool
+    {
+        $sql = "UPDATE tbl_aluno
+                   SET reset_token_hash = :h,
+                       reset_token_expires = :e
+                 WHERE id_aluno = :id";
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':h',  $tokenHash, PDO::PARAM_STR);
+        $st->bindValue(':e',  $expira,    PDO::PARAM_STR);
+        $st->bindValue(':id', $id,        PDO::PARAM_INT);
+        return $st->execute();
+    }
+
+    public function getAlunoPorResetHash(string $tokenHash)
+    {
+        $sql = "SELECT id_aluno, reset_token_expires
+                  FROM tbl_aluno
+                 WHERE reset_token_hash = :h
+                 LIMIT 1";
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':h', $tokenHash, PDO::PARAM_STR);
+        $st->execute();
+        return $st->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    public function limparResetToken(int $id): bool
+    {
+        $sql = "UPDATE tbl_aluno
+                   SET reset_token_hash = NULL,
+                       reset_token_expires = NULL
+                 WHERE id_aluno = :id";
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':id', $id, PDO::PARAM_INT);
+        return $st->execute();
+    }
+
+    public function atualizarSenha(int $id, string $senhaHash): bool
+    {
+        $sql = "UPDATE tbl_aluno
+                   SET senha_aluno = :s,
+                       data_atualizacao_aluno = NOW()
+                 WHERE id_aluno = :id";
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':s',  $senhaHash, PDO::PARAM_STR);
+        $st->bindValue(':id', $id,        PDO::PARAM_INT);
+        return $st->execute();
+    }
 }
