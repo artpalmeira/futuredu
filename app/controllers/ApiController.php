@@ -30,47 +30,48 @@ class ApiController extends Controller
 
 
     //************LOGIN**************** */
+
     public function LoginAluno()
     {
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email_aluno'] ?? null;
-            $senha = $_POST['senha_aluno'] ?? null;
-
-            if (!$email || !$senha) {
-                http_response_code(400);
-                echo json_encode(['erro' => 'E-mail ou senha são obrigatórios'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-                return;
-            }
-
-            $aluno = $this->alunoModel->postLoginAluno($email, $senha);
-
-            if ($aluno) {
-
-                //Gerar um token
-                $dadosToken = [
-                    'id'    => $aluno['id_aluno'],
-                    'email' => $aluno['email_aluno'],
-                    'exp'   => time() + 3600 // 1 hora de validade
-                ];
-                $token = AuxiliarToken::gerar($dadosToken);
-
-                if (!class_exists('AuxiliarToken')) {
-                    die('AuxiliarToken não foi carregado!');
-                }
-
-                echo json_encode([
-                    "mensagem"  => "Login realizado com sucesso!",
-                    'token'     => $token,
-                ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            } else {
-                http_response_code(401);
-                echo json_encode(['erro' => 'E-mail ou senha inválidos'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            }
-        } else {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
-            echo json_encode(["erro" => "Método não permitido"]);
+            echo json_encode(['erro' => 'Método não permitido'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
         }
+
+        // Coleta e valida os dados
+        $email = $_POST['email_aluno'] ?? null;
+        $senha = $_POST['senha_aluno'] ?? null;
+
+        if (empty($email) || empty($senha)) {
+            http_response_code(400);
+            echo json_encode(['erro' => 'E-mail e senha são obrigatórios'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // Busca o aluno pelo e-mail
+        $aluno = $this->alunoModel->postLoginAluno($email);
+
+        // Valida a senha com o hash salvo no banco
+        if ($aluno && password_verify($senha, $aluno['senha_aluno'])) {
+            $dadosToken = [
+                'id'    => $aluno['id_aluno'],
+                'email' => $aluno['email_aluno'],
+                'exp'   => time() + 3600, // Token válido por 1h
+            ];
+
+            $token = AuxiliarToken::gerar($dadosToken);
+
+            echo json_encode([
+                'mensagem' => 'Login realizado com sucesso!',
+                'token'    => $token
+            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(401);
+            echo json_encode(['erro' => 'E-mail ou senha inválidos'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        }
+
     }
 
 
@@ -99,11 +100,6 @@ class ApiController extends Controller
 
     public function AtualizarAluno($id)
     {
-
-         // Autenticação + Autorização
-         $this->verificar($id);
-         
-
         if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
             parse_str(file_get_contents("php://input"), $dados);
 
@@ -270,11 +266,13 @@ class ApiController extends Controller
 
 
 
-
     public function verificar($id)
     {
         // 1. Pega o header Authorization
         $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+
+        //$headers = getallheaders();
+        //$authHeader = $headers['Authorization'] ?? '';
 
         // 2. Valida se veio no formato "Bearer <token>"
         if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
@@ -293,6 +291,7 @@ class ApiController extends Controller
 
         // 4. Confere se o ID no token é o mesmo do recurso solicitado
         if ($payload['id'] !== (int)$id) {
+
             http_response_code(403);
             echo json_encode(["erro" => "Acesso negado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
             exit;
@@ -303,16 +302,16 @@ class ApiController extends Controller
     }
 
 
-
-
     public function recuperarSenhaAluno()
     {
+        // Verificação do método HTTP
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
             echo json_encode(['erro' => 'Método não permitido'], JSON_UNESCAPED_UNICODE);
             return;
         }
 
+        // Validação do campo email_aluno
         $email = filter_input(INPUT_POST, 'email_aluno', FILTER_SANITIZE_EMAIL);
         if (!$email) {
             http_response_code(400);
@@ -320,28 +319,35 @@ class ApiController extends Controller
             return;
         }
 
+        // Busca o aluno no banco de dados
         $aluno = $this->alunoModel->buscarAlunoPorEmail($email);
 
-        // Resposta genérica
+        // Resposta genérica para não expor e-mails
         if (!$aluno) {
             http_response_code(200);
             echo json_encode(['mensagem' => 'Se o e-mail existir, enviaremos um link para redefinição'], JSON_UNESCAPED_UNICODE);
             return;
         }
 
-        // 1) Gera TOKEN específico para reset
-        $resetToken = AuxiliarToken::gerarReset((int)$aluno['id_aluno'], $aluno['email_aluno'], 3600); // 1h
+        // Gera TOKEN específico para reset
+        $resetToken = AuxiliarToken::gerarReset((int)$aluno['id_aluno'], $aluno['email_aluno'], 3600);
+        // Gera um token JWT válido por 1 hora (3600 segundos).
+        // Usa o método gerarReset() que define o escopo como pwd_reset.
+        // Esse token será enviado ao usuário.
 
-        // 2) Armazena somente o hash + expiração
+
+        // Criação do hash e definição do tempo de expiração
         $hash   = hash('sha256', $resetToken);
         $expira = (new DateTime('+1 hour'))->format('Y-m-d H:i:s');
 
+        // Armazena no banco
         $this->alunoModel->salvarResetToken((int)$aluno['id_aluno'], $hash, $expira);
 
-        // 3) Monta link
-        $link = URL_BASE . "api/redefinirSenha?token={$resetToken}";
+        // Monta link
+        $link = URL_APP . "index.php?url=login/redefinirSenha/token={$resetToken}";
+        // Aqui estamos usando em URL_APP uma variável definida no arquivo config
 
-        // 4) Envia e-mail
+        // Envia e-mail
         require 'vendors/email/Exception.php';
         require 'vendors/email/PHPMailer.php';
         require 'vendors/email/SMTP.php';
@@ -359,8 +365,6 @@ class ApiController extends Controller
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = EMAIL_PORT;
 
-
-
             $mail->setFrom(EMAIL_USER, 'Escola FuturEdu');
             $mail->addAddress($aluno['email_aluno'], $aluno['nome_aluno'] ?? 'Aluno');
             $mail->setLanguage('br');
@@ -369,12 +373,24 @@ class ApiController extends Controller
             $mail->isHTML(true);
             $mail->Subject = 'Recuperação de Senha';
             $mail->msgHTML("
-            Olá, {$aluno['nome_aluno']}!<br><br>
-            Recebemos uma solicitação para redefinir sua senha.<br>
-            Este link é válido por 1 hora e pode ser usado uma única vez:<br><br>
-            <a href='{$link}'>{$link}</a><br><br>
-            Se você não fez essa solicitação, ignore este e-mail.
-        ");
+                Olá, {$aluno['nome_aluno']}!<br><br>
+                Recebemos uma solicitação para redefinir sua senha.<br>
+                Este link é válido por 1 hora e pode ser usado uma única vez:<br><br>
+
+                <a href='{$link}' style='
+                    display: inline-block;
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    color: #fff;
+                    background-color: #28a745;
+                    text-decoration: none;
+                    border-radius: 5px;
+                '>
+                    Redefinir Senha
+                </a><br><br>
+
+                Se você não fez essa solicitação, ignore este e-mail.
+            ");
             $mail->AltBody = "Para redefinir sua senha (válido por 1h), acesse: {$link}";
 
             $mail->send();
