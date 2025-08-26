@@ -74,6 +74,69 @@ class Aluno extends Model
     }
 
 
+    /* API */
+
+
+
+    /**
+     * Listar os cursos em que um aluno está matriculado
+     * @param int $idAluno
+     * @return array
+     */
+    public function getCursosDoAluno(int $idAluno): array
+    {
+        $sql = "SELECT 
+                tbl_sigla_curso.id_sigla,
+                nome_sigla,
+                nome_curso,
+                modalidade_curso,
+                carga_horaria_sigla
+            FROM tbl_matricula
+            INNER JOIN tbl_sigla_curso ON tbl_matricula.id_sigla = tbl_sigla_curso.id_sigla 
+            INNER JOIN tbl_curso ON tbl_sigla_curso.id_curso = tbl_curso.id_curso
+            WHERE id_aluno = :id";
+
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':id', $idAluno, PDO::PARAM_INT);
+        $st->execute();
+
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Retorna todas as notas do aluno no curso informado.
+     * @param int $idAluno
+     * @param int $idSigla
+     * @return array
+     */
+    public function getNotasPorCurso(int $idAluno, int $idSigla): array
+    {
+        $sql = "SELECT 
+                tbl_sigla_curso.id_sigla,
+                nome_sigla,
+                nome_curso,
+                modalidade_curso,
+                carga_horaria_sigla,
+                tipo_nota,
+                nota,
+                data_nota,
+                obs_nota
+            FROM tbl_matricula
+            INNER JOIN tbl_sigla_curso ON tbl_matricula.id_sigla = tbl_sigla_curso.id_sigla 
+            INNER JOIN tbl_curso ON tbl_sigla_curso.id_curso = tbl_curso.id_curso
+            INNER JOIN tbl_nota ON tbl_nota.id_matricula = tbl_matricula.id_matricula
+            WHERE id_aluno = :aluno AND tbl_sigla_curso.id_sigla = :sigla";
+
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':aluno', $idAluno, PDO::PARAM_INT);
+        $st->bindValue(':sigla', $idSigla, PDO::PARAM_INT);
+        $st->execute();
+
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
     public function salvarResetToken(int $id, string $tokenHash, string $expira): bool
     {
         $sql = "UPDATE tbl_aluno
@@ -87,8 +150,6 @@ class Aluno extends Model
         return $st->execute();
     }
 
-
-    
     public function getAlunoPorResetHash(string $tokenHash)
     {
         $sql = "SELECT id_aluno, reset_token_expires

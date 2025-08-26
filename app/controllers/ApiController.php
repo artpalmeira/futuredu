@@ -23,14 +23,18 @@ class ApiController extends Controller
     public function index()
     {
         $dados = array();
-        $dados['titulo'] = 'Área de Atuação - Ki Oficina';
+        $dados['titulo'] = 'Área de Atuação - FuturEdu';
 
         $this->carregarViews('api', $dados);
     }
 
 
-    //************LOGIN**************** */
+    // ============================ LOGIN ============================
 
+    /**
+     * POST /api/LoginAluno
+     * Autentica o aluno e retorna um token JWT.
+     */
     public function LoginAluno()
     {
 
@@ -51,7 +55,7 @@ class ApiController extends Controller
         }
 
         // Busca o aluno pelo e-mail
-        $aluno = $this->alunoModel->postLoginAluno($email);
+        $aluno = $this->alunoModel->postLoginAluno($email); // Método retorna aluno + senha_hash
 
         // Valida a senha com o hash salvo no banco
         if ($aluno && password_verify($senha, $aluno['senha_aluno'])) {
@@ -71,63 +75,117 @@ class ApiController extends Controller
             http_response_code(401);
             echo json_encode(['erro' => 'E-mail ou senha inválidos'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         }
-
     }
 
 
 
-    //************ALUNOS**************** */  
+    // ============================ ALUNO ============================
 
+    /**
+     * GET /api/ListarAluno/{id}
+     * Retorna dados do aluno autenticado.
+     */
     public function ListarAlunoId($id)
     {
-        // Autenticação + Autorização
+        // Autenticação do aluno com base no token JWT
         $this->verificar($id);
 
-
-        // 🔎 Buscar aluno no banco
+        // Busca os dados do aluno no banco de dados
         $aluno = $this->alunoModel->getAlunoId($id);
 
+        // Verifica se aluno foi encontrado
         if (empty($aluno)) {
             http_response_code(404);
             echo json_encode(["mensagem" => "Nenhum aluno encontrado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
             return;
         }
 
-        // Resposta
+        // Retorna os dados do aluno
         echo json_encode($aluno, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-
+    /**
+     * PATCH /api/aluno/{id}
+     * Atualiza dados do aluno.
+     */
     public function AtualizarAluno($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
-            parse_str(file_get_contents("php://input"), $dados);
-
-            if (empty($dados)) {
-                http_response_code(400);
-                echo json_encode(["erro" => "Nenhum dado enviado para atualizar"]);
-                return;
-            }
-
-            $resultado = $this->alunoModel->patchAtualizarAluno($dados, $id);
-
-            if ($resultado) {
-                http_response_code(200);
-                echo json_encode(["mensagem" => "Aluno atualizado com sucesso!"]);
-            } else {
-                http_response_code(500);
-                echo json_encode(["erro" => "Erro ao atualizar o aluno. Erro de servidor."]);
-            }
-        } else {
+        if ($_SERVER['REQUEST_METHOD'] !== 'PATCH') {
             http_response_code(405);
             echo json_encode(["erro" => "Método não permitido."]);
+            return;
+        }
+
+        parse_str(file_get_contents("php://input"), $dados);
+
+        if (empty($dados)) {
+            http_response_code(400);
+            echo json_encode(["erro" => "Nenhum dado enviado para atualizar"]);
+            return;
+        }
+
+        $resultado = $this->alunoModel->patchAtualizarAluno($dados, $id);
+
+        if ($resultado) {
+            http_response_code(200);
+            echo json_encode(["mensagem" => "Aluno atualizado com sucesso!"]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["erro" => "Erro ao atualizar o aluno. Erro de servidor."]);
         }
     }
 
-    //************ FIM ALUNOS**************** */
+    /**
+     * GET /api/ListarCursosDoAluno/{id}
+     * Lista os cursos em que o aluno está matriculado (autenticado por token)
+     */
+    public function ListarCursosDoAluno($id)
+    {
+        // Autenticação obrigatória
+        $this->verificar($id);
+
+        // Buscar cursos do aluno
+        $cursos = $this->alunoModel->getCursosDoAluno($id);
+
+        if (empty($cursos)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum curso encontrado para este aluno."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    
+    /**
+     * GET /api/aluno/notasAluno/{idAluno}/{idSigla}
+     * Retorna todas as notas do aluno no curso informado.
+     */
+    public function ListarNotasAlunoPorSigla($idAluno, $idSigla)
+    {
+        // Valida se o token corresponde ao aluno da rota
+        $this->verificar($idAluno);
+
+        // Busca as notas no banco de dados
+        $notas = $this->alunoModel->getNotasPorCurso((int)$idAluno, (int)$idSigla);
+
+        if (empty($notas)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhuma nota encontrada para este curso."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode($notas, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
 
 
-    // ************CURSOS*****************
+
+
+
+
+
+    // ============================ CURSOS ============================
+
     // Listar todos os cursos em ordem alfabética
     public function ListarCursos()
     {
@@ -171,11 +229,14 @@ class ApiController extends Controller
     }
 
 
+
+
+
     // ************ FIM CURSOS**************
 
 
     // ************EMPRESAS*****************
-    // Listar todos os empresa em ordem alfabética
+    // Listar todas as empresas em ordem alfabética
     public function ListarEmpresas()
     {
         //echo 'ListarEmpresas';
@@ -197,12 +258,11 @@ class ApiController extends Controller
     // Listar todos os funcionarios pelo cargo em ordem alfabética
     public function ListarFuncionariosDados()
     {
-        //echo 'ListarFuncionariosDados';
         $funcionarios = $this->funcionarioModel->getDadosFuncionario();
 
         if (empty($funcionarios)) {
             http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhum funcionário encontrada"]);
+            echo json_encode(["mensagem" => "Nenhum funcionário encontrado"]);
             return;
         }
         echo json_encode($funcionarios, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
