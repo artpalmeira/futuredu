@@ -63,6 +63,18 @@
         <p>Retorna as notas do aluno no curso identificado por <code>idSigla</code>.</p>
       </div>
 
+      <div class="endpoint">
+        <span class="method">GET</span> <code>/api/aluno/mediasAluno/{idAluno}</code>
+        <p><strong>Header:</strong> Authorization: Bearer {token}</p>
+        <p>Retorna a média das notas por curso do aluno informado.</p>
+      </div>
+
+      <div class="endpoint">
+        <span class="method">GET</span> <code>/api/aluno/projetosAluno/{idAluno}</code>
+        <p><strong>Header:</strong> Authorization: Bearer {token}</p>
+        <p>Retorna os projetos em que o aluno participou.</p>
+      </div>
+
 
 
     </section>
@@ -114,7 +126,7 @@
       <div class="endpoint"><span class="method">GET</span> <code>/api/funcionarios/cargo/{cargo}</code> – Filtrar por cargo</div>
     </section>
 
-    <footer style="margin-top:4rem; font-size:0.9rem; color:var(--text-light);">
+    <footer>
       Documentação gerada em <?php echo date('d/m/Y'); ?>
     </footer>
   </main>

@@ -76,33 +76,29 @@ class Aluno extends Model
 
     /* API */
 
-
-
     /**
-     * Listar os cursos em que um aluno está matriculado
+     * Listar as notificações em que um aluno está matriculado
      * @param int $idAluno
      * @return array
      */
     public function getCursosDoAluno(int $idAluno): array
     {
         $sql = "SELECT 
-                tbl_sigla_curso.id_sigla,
-                nome_sigla,
-                nome_curso,
-                modalidade_curso,
-                carga_horaria_sigla
+                tbl_sigla_curso.id_sigla, 
+                nome_sigla, 
+                nome_curso, 
+                modalidade_curso, 
+                carga_horaria_sigla, 
+                foto_curso 
             FROM tbl_matricula
             INNER JOIN tbl_sigla_curso ON tbl_matricula.id_sigla = tbl_sigla_curso.id_sigla 
             INNER JOIN tbl_curso ON tbl_sigla_curso.id_curso = tbl_curso.id_curso
-            WHERE id_aluno = :id";
-
+            WHERE id_aluno = :id;";
         $st = $this->db->prepare($sql);
         $st->bindValue(':id', $idAluno, PDO::PARAM_INT);
         $st->execute();
-
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
-
     /**
      * Retorna todas as notas do aluno no curso informado.
      * @param int $idAluno
@@ -120,20 +116,178 @@ class Aluno extends Model
                 tipo_nota,
                 nota,
                 data_nota,
+                obs_nota,
+                status_nota
+            FROM tbl_matricula
+            INNER JOIN tbl_sigla_curso ON tbl_matricula.id_sigla = tbl_sigla_curso.id_sigla 
+            INNER JOIN tbl_curso ON tbl_sigla_curso.id_curso = tbl_curso.id_curso
+            LEFT JOIN tbl_nota ON tbl_nota.id_matricula = tbl_matricula.id_matricula
+            WHERE id_aluno = :aluno AND tbl_sigla_curso.id_sigla = :sigla";
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':aluno', $idAluno, PDO::PARAM_INT);
+        $st->bindValue(':sigla', $idSigla, PDO::PARAM_INT);
+        $st->execute();
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Summary of getMediasPorCurso
+     * @param int $idAluno
+     * @return array
+     * GET /api/aluno/ListarMediasAluno/{idAluno}
+     * Retorna a média das notas por curso para o aluno autenticado.
+     */
+    public function getMediasPorCurso(int $idAluno): array
+    {
+        $sql = "SELECT 
+                tbl_sigla_curso.id_sigla,
+                nome_sigla,
+                nome_curso,
+                AVG(nota) AS media,
+                MAX(data_nota) AS data_ultima,
                 obs_nota
             FROM tbl_matricula
             INNER JOIN tbl_sigla_curso ON tbl_matricula.id_sigla = tbl_sigla_curso.id_sigla 
             INNER JOIN tbl_curso ON tbl_sigla_curso.id_curso = tbl_curso.id_curso
             INNER JOIN tbl_nota ON tbl_nota.id_matricula = tbl_matricula.id_matricula
-            WHERE id_aluno = :aluno AND tbl_sigla_curso.id_sigla = :sigla";
+            WHERE id_aluno = :id
+            GROUP BY tbl_sigla_curso.id_sigla";
 
         $st = $this->db->prepare($sql);
-        $st->bindValue(':aluno', $idAluno, PDO::PARAM_INT);
-        $st->bindValue(':sigla', $idSigla, PDO::PARAM_INT);
+        $st->bindValue(':id', $idAluno, PDO::PARAM_INT);
         $st->execute();
 
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    /**
+     * Summary of getProjetosDoAluno
+     * @param int $idAluno
+     * @return array
+     * GET /api/aluno/ListarProjetosDoAluno/{idAluno}
+     * Retorna os projetos em que o aluno participou.
+     */
+    public function getProjetosDoAluno(int $idAluno): array
+    {
+        $sql = "SELECT 
+                titulo_projeto,
+                nome_funcionario,
+                status_projeto,
+                nota_projeto,
+                CONCAT(
+                    DATE_FORMAT(data_inicio_projeto,'%m/%Y'), 
+                    ' - ', 
+                    DATE_FORMAT(data_entrega_projeto, '%m/%Y')
+                ) AS 'Periodo',
+                url_projeto
+                FROM tbl_projeto
+                INNER JOIN tbl_participacao_projeto ON tbl_projeto.id_projeto = tbl_participacao_projeto.id_projeto
+                INNER JOIN tbl_professor ON tbl_projeto.id_professor = tbl_professor.id_professor
+                INNER JOIN tbl_funcionario ON tbl_professor.id_funcionario = tbl_funcionario.id_funcionario
+                WHERE id_aluno = :id";
+
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':id', $idAluno, PDO::PARAM_INT);
+        $st->execute();
+
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Summary of novoAluno
+     * @param array $dados
+     * @return bool
+     * PATCH /api/aluno/{id}
+     * Atualiza parcialmente os dados do aluno logado.
+     */
+    public function novoAluno(array $dados): bool
+    {
+        $sql = "INSERT INTO tbl_aluno ( nome_aluno,
+                                        nome_social_aluno, 
+                                        cpf_aluno,rg_aluno,
+                                        data_nasc_aluno,
+                                        email_aluno,F
+                                        senha_aluno,
+                                        telefone1_aluno,
+                                        telefone2_aluno,
+                                        cep_aluno,
+                                        endereco_aluno,
+                                        numero_aluno,
+                                        complemento_aluno,
+                                        bairro_aluno,
+                                        cidade_aluno,
+                                        estado_aluno,
+                                        foto_aluno,
+                                        alt_aluno,
+                                        nome_responsavel,
+                                        telefone_responsavel,
+                                        email_responsavel,
+                                        data_criacao_aluno,
+                                        data_atualizacao_aluno,
+                                        status_aluno) VALUES (  :nome_aluno,
+                                                                :nome_social_aluno,
+                                                                :cpf_aluno,
+                                                                :rg_aluno,
+                                                                :data_nasc_aluno,
+                                                                :email_aluno,
+                                                                :senha_aluno,
+                                                                :telefone1_aluno,
+                                                                :telefone2_aluno,
+                                                                :cep_aluno,
+                                                                :endereco_aluno,
+                                                                :numero_aluno,
+                                                                :complemento_aluno,
+                                                                :bairro_aluno,
+                                                                :cidade_aluno,
+                                                                :estado_aluno,
+                                                                :foto_aluno,
+                                                                :alt_aluno,
+                                                                :nome_responsavel,
+                                                                :telefone_responsavel,
+                                                                :email_responsavel,
+                                                                :data_criacao_aluno,
+                                                                :data_atualizacao_aluno,
+                                                                :status_aluno)";
+
+        $st = $this->db->prepare($sql);
+
+        foreach ($dados as $chave => $valor) {
+            $st->bindValue(":{$chave}", $valor);
+        }
+
+        if (!$st->execute()) {
+            $erro = $st->errorInfo();
+            var_dump($erro);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Summary of atualizarFoto
+     * @param mixed $idAluno
+     * @param mixed $nomeArquivo
+     * @return bool
+     * Atualizar foto do aluno
+     * - Tipos de arquivos permitidos: Somente JPG, JPEG e PNG são aceitos.
+     * - Tamanho máximo do arquivo: Não pode ultrapassar 2 MB (megabytes).
+     * - Formatação do nome da imagem: aluno_{id}_{nome}.{extensão}  | Exemplo: aluno_15_maria-silva.jpg
+     */
+    public function atualizarFoto($idAluno, $nomeArquivo): bool
+    {
+        $sql = "UPDATE tbl_aluno SET foto_aluno = :foto WHERE id_aluno = :id";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':foto', $nomeArquivo, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $idAluno, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+
+
 
 
 

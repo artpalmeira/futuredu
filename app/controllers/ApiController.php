@@ -105,6 +105,252 @@ class ApiController extends Controller
     }
 
     /**
+     * GET /api/ListarCursosDoAluno/{id}
+     * Lista os cursos em que o aluno está matriculado (autenticado por token)
+     */
+    public function ListarCursosDoAluno($id)
+    {
+        // Autenticação obrigatória
+        $this->verificar($id);
+
+        // Buscar cursos do aluno
+        $cursos = $this->alunoModel->getCursosDoAluno($id);
+
+        if (empty($cursos)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum curso encontrado para este aluno."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * GET /api/aluno/notasAluno/{idAluno}/{idSigla}
+     * Retorna todas as notas do aluno no curso informado.
+     */
+    public function ListarNotasAlunoPorSigla($idAluno, $idSigla)
+    {
+        // Valida se o token corresponde ao aluno da rota
+        $this->verificar($idAluno);
+
+        // Busca as notas no banco de dados
+        $notas = $this->alunoModel->getNotasPorCurso((int)$idAluno, (int)$idSigla);
+
+        if (empty($notas)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhuma nota encontrada para este curso."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode($notas, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * GET /api/aluno/ListarMediasAluno/{idAluno}
+     * Retorna a média das notas por curso para o aluno autenticado.
+     */
+
+    public function ListarMediasAluno($idAluno)
+    {
+        // Verifica se o token é válido para o aluno informado
+        $this->verificar($idAluno);
+
+        // Busca médias no banco de dados
+        $medias = $this->alunoModel->getMediasPorCurso((int)$idAluno);
+
+        if (empty($medias)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhuma média encontrada para este aluno."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode($medias, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+
+    /**
+     * GET /api/aluno/ListarProjetosDoAluno/{idAluno}
+     * Retorna os projetos em que o aluno participou.
+     */
+    public function ListarProjetosDoAluno($idAluno)
+    {
+
+        // Valida o token e confere se pertence ao aluno da rota
+        $this->verificar($idAluno);
+
+        $projetos = $this->alunoModel->getProjetosDoAluno((int)$idAluno);
+
+        if (empty($projetos)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum projeto encontrado para este aluno."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        echo json_encode($projetos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+
+    /**
+     * POST /api/aluno
+     * Cadastra um novo aluno com todos os campos relevantes
+     */
+    public function CadastrarAluno()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['erro' => 'Método não permitido'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+        // Coleta todos os campos da tabela
+
+        $dataAtual = date('Y-m-d H:i:s');
+
+        $dados = [
+            'nome_aluno'            => $_POST['nome_aluno']            ?? null,
+            'nome_social_aluno'     => $_POST['nome_social_aluno']     ?? null,
+            'cpf_aluno'             => $_POST['cpf_aluno']             ?? null,
+            'rg_aluno'              => $_POST['rg_aluno']              ?? null,
+            'data_nasc_aluno'       => $_POST['data_nasc_aluno']       ?? null,
+            'email_aluno'           => $_POST['email_aluno']           ?? null,
+            'senha_aluno'           => $_POST['senha_aluno']           ?? null,
+            'telefone1_aluno'       => $_POST['telefone1_aluno']       ?? null,
+            'telefone2_aluno'       => $_POST['telefone2_aluno']       ?? null,
+            'cep_aluno'             => $_POST['cep_aluno']             ?? null,
+            'endereco_aluno'        => $_POST['endereco_aluno']        ?? null,
+            'numero_aluno'          => $_POST['numero_aluno']          ?? null,
+            'complemento_aluno'     => $_POST['complemento_aluno']     ?? null,
+            'bairro_aluno'          => $_POST['bairro_aluno']          ?? null,
+            'cidade_aluno'          => $_POST['cidade_aluno']          ?? null,
+            'estado_aluno'          => $_POST['estado_aluno']          ?? null,
+            'foto_aluno'            => 'sem-foto.jpg',
+            'alt_aluno'             => $_POST['alt_aluno']             ?? null,
+            'nome_responsavel'      => $_POST['nome_responsavel']      ?? null,
+            'telefone_responsavel'  => $_POST['telefone_responsavel']  ?? null,
+            'email_responsavel'     => $_POST['email_responsavel']     ?? null,
+            'data_criacao_aluno'    => $dataAtual,
+            'data_atualizacao_aluno' => $dataAtual,
+            'status_aluno'          => 'Ativo',
+        ];
+
+        // Esse foreach está percorrendo o array $dados
+        // foreach ($dados as $chave => $valor) {
+        //     var_dump(":{$chave}", $valor);
+        //     // Todos os dados vindos do $_POST
+        //     // $chave representa o nome do campo (ex: nome_aluno, email_aluno)
+        //     // $valor representa o conteúdo que foi enviado para esse campo
+        // }
+
+        // Verificação de alguns dados ( campos obrigatórios )
+        if (!$dados['nome_aluno'] || !$dados['email_aluno'] || !$dados['senha_aluno'] || !$dados['cpf_aluno']) {
+            http_response_code(400);
+            echo json_encode(['erro' => 'Campos obrigatórios ausentes.'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // // Gera hash da senha
+        $dados['senha_aluno'] = password_hash($dados['senha_aluno'], PASSWORD_DEFAULT);
+
+
+        // // Salva no banco via model
+        $ok = $this->alunoModel->novoAluno($dados);
+
+        // var_dump($ok);
+
+        if ($ok) {
+            http_response_code(201);
+            echo json_encode(['mensagem' => 'Aluno cadastrado com sucesso!'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(500);
+            echo json_encode(['erro' => 'Erro ao cadastrar o aluno.'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    /**
+     * POST /api/aluno/AtualizarFotoAluno/$id   
+     * Atualizar foto do aluno
+     * - Tipos de arquivos permitidos: Somente JPG, JPEG e PNG são aceitos.
+     * - Tamanho máximo do arquivo: Não pode ultrapassar 2 MB (megabytes).
+     * - Formatação do nome da imagem: aluno_{id}_{nome}.{extensão}  | Exemplo: aluno_15_maria-silva.jpg
+     */
+    public function AtualizarFotoAluno($idAluno)
+    {
+
+        // Valida o token e confere se pertence ao aluno da rota
+        $this->verificar($idAluno);
+
+        $idAluno = (int) $idAluno; // vindo da URL: /api/aluno/atualizar-foto/{id}
+
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['erro' => 'Método não permitido'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        if (!isset($_FILES['foto_aluno'])) {
+            http_response_code(400);
+            echo json_encode(['erro' => 'Arquivo de imagem não enviado.'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $arquivo = $_FILES['foto_aluno'];
+
+        // Validação básica
+        $permitidos = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!in_array($arquivo['type'], $permitidos)) {
+            http_response_code(400);
+            echo json_encode(['erro' => 'Formato de imagem não suportado. Use JPG ou PNG.'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        if ($arquivo['size'] > 2 * 1024 * 1024) { // 2MB
+            http_response_code(400);
+            echo json_encode(['erro' => 'Imagem muito grande. Máximo 2MB.'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // Gera novo nome de arquivo
+        $aluno = $this->alunoModel->getAlunoId($idAluno);
+
+        if (!$aluno) {
+            http_response_code(404);
+            echo json_encode(['erro' => 'Aluno não encontrado'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $novoNome = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '-', $aluno[0]['nome_aluno']), '-'));
+        $extensao = pathinfo($arquivo['name'], PATHINFO_EXTENSION);
+
+        $novoNome = "aluno_{$idAluno}_{$novoNome}.{$extensao}";
+
+        $caminho = "upload/aluno/" . $novoNome;
+
+        // Move o arquivo
+        if (!move_uploaded_file($arquivo['tmp_name'], $caminho)) {
+            http_response_code(500);
+            echo json_encode(['erro' => 'Erro ao salvar a imagem.'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        // Atualiza no banco
+        $ok = $this->alunoModel->atualizarFoto($idAluno, $novoNome);
+
+
+        if ($ok) {
+            http_response_code(200);
+            echo json_encode(['mensagem' => 'Foto atualizada com sucesso!', 'foto' => $novoNome], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(500);
+            echo json_encode(['erro' => 'Erro ao atualizar no banco de dados.'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+
+
+
+
+    /**
      * PATCH /api/aluno/{id}
      * Atualiza dados do aluno.
      */
@@ -133,49 +379,6 @@ class ApiController extends Controller
             http_response_code(500);
             echo json_encode(["erro" => "Erro ao atualizar o aluno. Erro de servidor."]);
         }
-    }
-
-    /**
-     * GET /api/ListarCursosDoAluno/{id}
-     * Lista os cursos em que o aluno está matriculado (autenticado por token)
-     */
-    public function ListarCursosDoAluno($id)
-    {
-        // Autenticação obrigatória
-        $this->verificar($id);
-
-        // Buscar cursos do aluno
-        $cursos = $this->alunoModel->getCursosDoAluno($id);
-
-        if (empty($cursos)) {
-            http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhum curso encontrado para este aluno."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            return;
-        }
-
-        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
-
-    
-    /**
-     * GET /api/aluno/notasAluno/{idAluno}/{idSigla}
-     * Retorna todas as notas do aluno no curso informado.
-     */
-    public function ListarNotasAlunoPorSigla($idAluno, $idSigla)
-    {
-        // Valida se o token corresponde ao aluno da rota
-        $this->verificar($idAluno);
-
-        // Busca as notas no banco de dados
-        $notas = $this->alunoModel->getNotasPorCurso((int)$idAluno, (int)$idSigla);
-
-        if (empty($notas)) {
-            http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhuma nota encontrada para este curso."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            return;
-        }
-
-        echo json_encode($notas, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
 
