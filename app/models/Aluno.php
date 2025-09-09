@@ -3,8 +3,11 @@
 
 class Aluno extends Model
 {
-
-    //Método para login do aluno
+    /**
+     * Summary of postLoginAluno
+     * @param string $email
+     * Método para login do aluno
+     */
     public function postLoginAluno(string $email): ?array
     {
         $sql = "SELECT id_aluno, nome_aluno, email_aluno, senha_aluno
@@ -20,7 +23,10 @@ class Aluno extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
-    // Método para listar todos os Aluno
+    /**
+     * Summary of getTodosAlunos
+     * Método para listar todos os Aluno
+     */
     public function getTodosAlunos()
     {
 
@@ -29,7 +35,11 @@ class Aluno extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Método para listar o aluno pelo ID
+    /**
+     * Summary of getAlunoId
+     * @param mixed $id
+     * Método para listar o aluno pelo ID
+     */
     public function getAlunoId($id)
     {
         $sql = "SELECT * FROM tbl_aluno WHERE status_aluno = 'Ativo' AND id_aluno = :cod_aluno";
@@ -39,7 +49,12 @@ class Aluno extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Método para atualizar os dados do aluno
+    /**
+     * Summary of patchAtualizarAluno
+     * @param mixed $dados
+     * @param mixed $id
+     * Método para atualizar os dados do aluno
+     */
     public function patchAtualizarAluno($dados, $id)
     {
         //Prepara uma array que reconheça os campos
@@ -60,7 +75,11 @@ class Aluno extends Model
         return $stmt->execute();
     }
 
-    //Método buscar aluno por e-mail
+    /**
+     * Summary of buscarAlunoPorEmail
+     * @param mixed $email
+     * Método buscar aluno por e-mail
+     */
     public function buscarAlunoPorEmail($email)
     {
         $sql = "SELECT id_aluno, nome_aluno, email_aluno
@@ -74,7 +93,9 @@ class Aluno extends Model
     }
 
 
-    /* API */
+    // ===================================================================
+    // ============================== API ================================
+    // ===================================================================
 
     /**
      * Listar as notificações em que um aluno está matriculado
@@ -99,6 +120,7 @@ class Aluno extends Model
         $st->execute();
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
+
     /**
      * Retorna todas as notas do aluno no curso informado.
      * @param int $idAluno
@@ -159,7 +181,6 @@ class Aluno extends Model
 
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
-
 
     /**
      * Summary of getProjetosDoAluno
@@ -287,10 +308,49 @@ class Aluno extends Model
     }
 
 
+    /**
+     * Listar as notificações em que um aluno está matriculado
+     * @param int $idAluno
+     * @return array
+     */
+    public function getNotificacaoDoAluno(int $idAluno): array
+    {
+        $sql = "SELECT * FROM tbl_notificacao
+            WHERE id_registro = :id AND status_notificacao <> 'APAGADO'";
 
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':id', $idAluno, PDO::PARAM_INT);
+        $st->execute();
 
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    /**
+     * Atualiza o status de uma notificação
+     * @param int $idNotificacao
+     * @param string $status
+     * @return bool
+     */
+    public function patchAtualizarNotificacao(int $idNotificacao, string $status): bool
+    {
+        $sql = "UPDATE tbl_notificacao 
+            SET status_notificacao = :status 
+            WHERE id_notificacao = :id";
 
+        $st = $this->db->prepare($sql);
+        $st->bindValue(':status', $status, PDO::PARAM_STR);
+        $st->bindValue(':id', $idNotificacao, PDO::PARAM_INT);
+
+        return $st->execute();
+    }
+
+    /**
+     * Summary of salvarResetToken
+     * @param int $id
+     * @param string $tokenHash
+     * @param string $expira
+     * @return bool
+     */
     public function salvarResetToken(int $id, string $tokenHash, string $expira): bool
     {
         $sql = "UPDATE tbl_aluno
@@ -304,6 +364,10 @@ class Aluno extends Model
         return $st->execute();
     }
 
+    /**
+     * Summary of getAlunoPorResetHash
+     * @param string $tokenHash
+     */
     public function getAlunoPorResetHash(string $tokenHash)
     {
         $sql = "SELECT id_aluno, reset_token_expires
@@ -316,6 +380,11 @@ class Aluno extends Model
         return $st->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
+    /**
+     * Summary of limparResetToken
+     * @param int $id
+     * @return bool
+     */
     public function limparResetToken(int $id): bool
     {
         $sql = "UPDATE tbl_aluno
@@ -327,6 +396,12 @@ class Aluno extends Model
         return $st->execute();
     }
 
+    /**
+     * Summary of atualizarSenha
+     * @param int $id
+     * @param string $senhaHash
+     * @return bool
+     */
     public function atualizarSenha(int $id, string $senhaHash): bool
     {
         $sql = "UPDATE tbl_aluno
@@ -338,4 +413,5 @@ class Aluno extends Model
         $st->bindValue(':id', $id,        PDO::PARAM_INT);
         return $st->execute();
     }
+
 }

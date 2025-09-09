@@ -29,11 +29,21 @@ class ApiController extends Controller
     }
 
 
-    // ============================ LOGIN ============================
+    // ===================================================================
+    // ======================= ROTAS DE NEGÓCIO ==========================
+    // ===================================================================
+
+
+    // ===================================================================
+    // ============================= LOGIN ===============================
+    // ===================================================================
+
 
     /**
      * POST /api/LoginAluno
-     * Autentica o aluno e retorna um token JWT.
+     * @return void
+     * Autentica o aluno com base em e-mail e senha.
+     * Retorna um token JWT válido por 1 hora.
      */
     public function LoginAluno()
     {
@@ -79,10 +89,14 @@ class ApiController extends Controller
 
 
 
-    // ============================ ALUNO ============================
+    // ===================================================================
+    // ============================= ALUNO ===============================
+    // ===================================================================
 
     /**
      * GET /api/ListarAluno/{id}
+     * @param mixed $id
+     * @return void
      * Retorna dados do aluno autenticado.
      */
     public function ListarAlunoId($id)
@@ -106,6 +120,8 @@ class ApiController extends Controller
 
     /**
      * GET /api/ListarCursosDoAluno/{id}
+     * @param mixed $id
+     * @return void
      * Lista os cursos em que o aluno está matriculado (autenticado por token)
      */
     public function ListarCursosDoAluno($id)
@@ -127,7 +143,10 @@ class ApiController extends Controller
 
     /**
      * GET /api/aluno/notasAluno/{idAluno}/{idSigla}
-     * Retorna todas as notas do aluno no curso informado.
+     * @param mixed $idAluno
+     * @param mixed $idSigla
+     * @return void
+     * Retorna todas as notas do aluno no curso informado.     
      */
     public function ListarNotasAlunoPorSigla($idAluno, $idSigla)
     {
@@ -148,9 +167,10 @@ class ApiController extends Controller
 
     /**
      * GET /api/aluno/ListarMediasAluno/{idAluno}
+     * @param mixed $idAluno
+     * @return void
      * Retorna a média das notas por curso para o aluno autenticado.
      */
-
     public function ListarMediasAluno($idAluno)
     {
         // Verifica se o token é válido para o aluno informado
@@ -168,9 +188,70 @@ class ApiController extends Controller
         echo json_encode($medias, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
+    /**
+     * GET /api/ListarNotificacao/{idAluno}
+     * @param mixed $idAluno
+     * @return void
+     * Retorna todas as notificacões do aluno.
+     */
+    public function ListarNotificacao($idAluno)
+    {
+        // Valida se o token corresponde ao aluno da rota
+        $this->verificar($idAluno);
+
+        // Busca as notas no banco de dados
+        $notificacao = $this->alunoModel->getNotificacaoDoAluno((int)$idAluno);
+
+        if (empty($notificacao)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhuma notificação para esse aluno ."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        header('Content-Type: application/json; charset=utf-8'); // garante retorno em JSON
+        echo json_encode($notificacao, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * PATCH /api/AtualizarNotificacao/{idNotificacao}
+     * @param mixed $idNotificacao
+     * @return void
+     * Atualiza o status da notificação (ex.: ENVIADO → LIDO, ou APAGADO)
+     */
+    public function AtualizarNotificacao($idNotificacao)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'PATCH') {
+            http_response_code(405);
+            echo json_encode(["erro" => "Método não permitido."]);
+            return;
+        }
+
+        parse_str(file_get_contents("php://input"), $dados);
+
+        if (empty($dados['status'])) {
+            http_response_code(400);
+            echo json_encode(["erro" => "Nenhum status enviado para atualizar"]);
+            return;
+        }
+
+        $status = $dados['status'];
+
+        $resultado = $this->alunoModel->patchAtualizarNotificacao((int)$idNotificacao, $status);
+
+        if ($resultado) {
+            http_response_code(200);
+            echo json_encode(["mensagem" => "Notificação atualizada com sucesso!"]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["erro" => "Erro ao atualizar a notificação."]);
+        }
+    }
+
 
     /**
      * GET /api/aluno/ListarProjetosDoAluno/{idAluno}
+     * @param mixed $idAluno
+     * @return void
      * Retorna os projetos em que o aluno participou.
      */
     public function ListarProjetosDoAluno($idAluno)
@@ -193,7 +274,8 @@ class ApiController extends Controller
 
     /**
      * POST /api/aluno
-     * Cadastra um novo aluno com todos os campos relevantes
+     * @return void
+     *  Cadastra um novo aluno com todos os campos relevantes
      */
     public function CadastrarAluno()
     {
@@ -266,8 +348,11 @@ class ApiController extends Controller
         }
     }
 
+
     /**
-     * POST /api/aluno/AtualizarFotoAluno/$id   
+     * POST /api/aluno/AtualizarFotoAluno/$id
+     * @param mixed $idAluno
+     * @return void
      * Atualizar foto do aluno
      * - Tipos de arquivos permitidos: Somente JPG, JPEG e PNG são aceitos.
      * - Tamanho máximo do arquivo: Não pode ultrapassar 2 MB (megabytes).
@@ -347,11 +432,10 @@ class ApiController extends Controller
     }
 
 
-
-
-
     /**
      * PATCH /api/aluno/{id}
+     * @param mixed $id
+     * @return void
      * Atualiza dados do aluno.
      */
     public function AtualizarAluno($id)
@@ -383,152 +467,11 @@ class ApiController extends Controller
 
 
 
-
-
-
-
-    // ============================ CURSOS ============================
-
-    // Listar todos os cursos em ordem alfabética
-    public function ListarCursos()
-    {
-        //echo 'ListarCursos';
-        $cursos = $this->cursoModel->getTodosCurso();
-
-        if (empty($cursos)) {
-            http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhum curso encontrado"]);
-            return;
-        }
-        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
-
-    // Listar os cursos aleatórios
-    public function ListarCursosAleatorio()
-    {
-        // echo 'ListarCursosAleatorio';
-        $cursos = $this->cursoModel->getCursoRand();
-
-        if (empty($cursos)) {
-            http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhum curso encontrado"]);
-            return;
-        }
-        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
-
-    // Buscar Curso  - REVER
-    public function ListarCursoBusca($curso)
-    {
-        //echo 'ListarCursoBusca';
-        $cursos = $this->cursoModel->getCursoBusca($curso);
-
-        if (empty($cursos)) {
-            http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhum curso encontrado"]);
-            return;
-        }
-        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
-
-
-
-
-
-    // ************ FIM CURSOS**************
-
-
-    // ************EMPRESAS*****************
-    // Listar todas as empresas em ordem alfabética
-    public function ListarEmpresas()
-    {
-        //echo 'ListarEmpresas';
-        $empresas = $this->empresaModel->getEmpresas();
-
-        if (empty($empresas)) {
-            http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhuma empresa encontrada"]);
-            return;
-        }
-        echo json_encode($empresas, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
-
-
-    // ************ FIM EMPRESAS****************
-
-
-    // ************FUNCIONARIOS*****************
-    // Listar todos os funcionarios pelo cargo em ordem alfabética
-    public function ListarFuncionariosDados()
-    {
-        $funcionarios = $this->funcionarioModel->getDadosFuncionario();
-
-        if (empty($funcionarios)) {
-            http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhum funcionário encontrado"]);
-            return;
-        }
-        echo json_encode($funcionarios, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
-
-    // Buscar FUNC por Cargo - Rever
-    public function ListarFuncionariosCargo($cargo)
-    {
-        //echo 'ListarFuncionariosCargo';
-        $funcionarios = $this->funcionarioModel->getFuncionariosCargo($cargo);
-
-        if (empty($funcionarios)) {
-            http_response_code(404);
-            echo json_encode(["mensagem" => "Nenhum funcionário encontrado"]);
-            return;
-        }
-        echo json_encode($funcionarios, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
-
-
-    // ************ FIM FUNCIONARIOS********
-
-
-    // ************PROJETOS***************** - REVER
-    public function NovoProjeto()
-    {
-        $titulo = $_POST['titulo_projeto'] ?? null;
-        $descricao = $_POST['descricao_projeto'] ?? null;
-        $cod_professor = $_POST['id_professor'] ?? null;
-        $cod_sigla = $_POST['id_sigla'] ?? null;
-        $data_inicio = $_POST['data_inicio_projeto'] ?? null;
-        $data_entrega = $_POST['data_entrega_projeto'] ?? null;
-        $status_projeto = $_POST['status_projeto'] ?? null;
-        $url_projeto = $_POST['url_projeto'] ?? null;
-
-        $resposta = $this->projetoModel->postNovoProjeto($titulo, $descricao, $cod_professor, $cod_sigla, $data_inicio, $data_entrega, $status_projeto, $url_projeto);
-
-        header('Content-Type: application/json');
-        echo json_encode($resposta);
-        exit;
-    }
-
-    // REVER
-    public function ParticiparProjeto()
-    {
-
-        $cod_projeto = $_POST['id_projeto'] ?? null;
-        $nome_aluno = $_POST['nome_aluno'] ?? null;
-        $nota_participacao = $_POST['nota_participacao_projeto'] ?? null;
-        $observacao = $_POST['obs_participacao_projeto'] ?? null;
-
-        $resposta = $this->projetoModel->postParticiparProjeto($cod_projeto, $nome_aluno, $nota_participacao, $observacao);
-
-        header('Content-Type: application/json');
-        echo json_encode($resposta);
-        exit;
-    }
-
-
-    // ************ FIM PROJETOS*****************
-
-
-
+    /**
+     * Summary of verificar
+     * @param mixed $id
+     * @return array
+     */
     public function verificar($id)
     {
         // 1. Pega o header Authorization
@@ -564,7 +507,10 @@ class ApiController extends Controller
         return $payload;
     }
 
-
+    /**
+     * Summary of recuperarSenhaAluno
+     * @return void
+     */
     public function recuperarSenhaAluno()
     {
         // Verificação do método HTTP
@@ -666,7 +612,10 @@ class ApiController extends Controller
         }
     }
 
-
+    /**
+     * Summary of resetarSenhaAluno
+     * @return void
+     */
     public function resetarSenhaAluno()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -728,4 +677,185 @@ class ApiController extends Controller
             echo json_encode(['erro' => 'Erro ao atualizar a senha'], JSON_UNESCAPED_UNICODE);
         }
     }
+
+
+
+    // ===================================================================
+    // ============================ CURSOS ===============================
+    // ===================================================================
+
+    /**
+     * GET /api/cursos
+     * Lista todos os cursos em ordem alfabética.
+     */
+    public function ListarCursos()
+    {
+        $cursos = $this->cursoModel->getTodosCurso();
+
+        if (empty($cursos)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum curso encontrado"]);
+            return;
+        }
+
+        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * GET /api/cursos/aleatorios
+     * Lista cursos de forma aleatória.
+     */
+    public function ListarCursosAleatorio()
+    {
+        $cursos = $this->cursoModel->getCursoRand();
+
+        if (empty($cursos)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum curso encontrado"]);
+            return;
+        }
+
+        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * GET /api/cursos/busca/{termo}
+     * Busca cursos com base em um termo.
+     */
+    public function ListarCursoBusca($curso)
+    {
+        $cursos = $this->cursoModel->getCursoBusca($curso);
+
+        if (empty($cursos)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum curso encontrado"]);
+            return;
+        }
+
+        echo json_encode($cursos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+
+
+    // ===================================================================
+    // ============================ EMPRESAS ==============================
+    // ===================================================================
+
+
+    /**
+     * GET /api/empresas
+     * Lista todas as empresas em ordem alfabética.
+     */
+    public function ListarEmpresas()
+    {
+        $empresas = $this->empresaModel->getEmpresas();
+
+        if (empty($empresas)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhuma empresa encontrada"]);
+            return;
+        }
+
+        echo json_encode($empresas, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+
+    // ===================================================================
+    // ========================== FUNCIONARIOS ===========================
+    // ===================================================================
+
+    /**
+     * GET /api/funcionarios
+     * Lista todos os funcionários com seus dados completos.
+     */
+    public function ListarFuncionariosDados()
+    {
+        $funcionarios = $this->funcionarioModel->getDadosFuncionario();
+
+        if (empty($funcionarios)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum funcionário encontrado"]);
+            return;
+        }
+
+        echo json_encode($funcionarios, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * GET /api/funcionarios/cargo/{cargo}
+     * Lista funcionários filtrando pelo cargo.
+     */
+    public function ListarFuncionariosCargo($cargo)
+    {
+        $funcionarios = $this->funcionarioModel->getFuncionariosCargo($cargo);
+
+        if (empty($funcionarios)) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Nenhum funcionário encontrado"]);
+            return;
+        }
+
+        echo json_encode($funcionarios, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    // ===================================================================
+    // ============================ PROJETOS =============================
+    // ===================================================================
+
+
+    /**
+     * POST /api/projetos
+     * Cadastra um novo projeto no banco de dados.
+     */
+    public function NovoProjeto()
+    {
+        $titulo         = $_POST['titulo_projeto'] ?? null;
+        $descricao      = $_POST['descricao_projeto'] ?? null;
+        $cod_professor  = $_POST['id_professor'] ?? null;
+        $cod_sigla      = $_POST['id_sigla'] ?? null;
+        $data_inicio    = $_POST['data_inicio_projeto'] ?? null;
+        $data_entrega   = $_POST['data_entrega_projeto'] ?? null;
+        $status_projeto = $_POST['status_projeto'] ?? null;
+        $url_projeto    = $_POST['url_projeto'] ?? null;
+
+        $resposta = $this->projetoModel->postNovoProjeto(
+            $titulo,
+            $descricao,
+            $cod_professor,
+            $cod_sigla,
+            $data_inicio,
+            $data_entrega,
+            $status_projeto,
+            $url_projeto
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($resposta);
+        exit;
+    }
+
+    /**
+     * POST /api/projetos/participar
+     * Registra a participação de um aluno em um projeto.
+     */
+    public function ParticiparProjeto()
+    {
+        $cod_projeto        = $_POST['id_projeto'] ?? null;
+        $nome_aluno         = $_POST['nome_aluno'] ?? null;
+        $nota_participacao  = $_POST['nota_participacao_projeto'] ?? null;
+        $observacao         = $_POST['obs_participacao_projeto'] ?? null;
+
+        $resposta = $this->projetoModel->postParticiparProjeto(
+            $cod_projeto,
+            $nome_aluno,
+            $nota_participacao,
+            $observacao
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($resposta);
+        exit;
+    }
+
+
 }
